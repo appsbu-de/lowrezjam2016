@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>My TITLE!</title>
+	<script src="lib/phaser.min.js"></script>
+	<script src="states/Boot.js"></script>
+	<script src="states/Preloader.js"></script>
+	<script src="states/MainMenu.js"></script>
+	<script src="states/Game.js"></script>
+    <style>
+
+		body {
+            margin: 0;
+            padding: 0;
+			background-color: #fff;
+        }
+    </style>
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+</head>
+<body>
+	<div id="phaser" style = "display: none"></div>
+	<div id="game">
+	    <canvas id="pixel" width="128" height="128"></canvas>
+	</div>
+<script type="text/javascript">
+var pixelcontext = null;
+var pixelwidth = 0;
+var pixelheight = 0;
+
+(function() {
+
+	//	100% of the browser window - see Boot.js for additional configuration
+	var SAFE_ZONE_WIDTH = 64;// * window.devicePixelRatio;
+	var SAFE_ZONE_HEIGHT = 64;// * window.devicePixelRatio;
+	var game = new Phaser.Game(SAFE_ZONE_WIDTH, SAFE_ZONE_HEIGHT, Phaser.AUTO, 'phaser');
+
+	//	Add the States your game has.
+	game.state.add('Boot', Lowrez.Boot);
+	game.state.add('Preloader', Lowrez.Preloader);
+	game.state.add('MainMenu', Lowrez.MainMenu);
+	game.state.add('Game', Lowrez.Game);
+
+	//	Now start the Boot state.
+	game.state.start('Boot');
+})();
+
+</script>
+
+</body>
+</html>
