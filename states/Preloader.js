@@ -5,7 +5,7 @@ Lowrez.Preloader = function(game) {
 Lowrez.Preloader.prototype = {
 
     preload: function() {
-
+        this.load.image('font', 'images/font.png');
     },
 
     create: function() {
@@ -14,7 +14,7 @@ Lowrez.Preloader.prototype = {
         logo.anchor.set(0.5, 0.5);
         logo.scale.set(0.25, 0.25);
 
-        this.game.time.events.add(Phaser.Timer.SECOND * 2.0, function() {
+        /*this.game.time.events.add(Phaser.Timer.SECOND * 2.0, function() {
 
             var tween = this.add.tween(logo)
                 .to({alpha: 0}, 750, Phaser.Easing.Linear.none);
@@ -25,7 +25,8 @@ Lowrez.Preloader.prototype = {
             }, this);
 
             tween.start();
-        }, this);
+        }, this);*/
+        this.startGame();
     },
 
     startGame: function() {

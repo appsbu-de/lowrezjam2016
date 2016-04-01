@@ -4,7 +4,7 @@ Lowrez.Game = function(game) {
 
 Lowrez.Game.prototype = {
 	create: function() {
-
+		this.game.stage.backgroundColor = '#ccc';
 	},
 
 	update: function() {
