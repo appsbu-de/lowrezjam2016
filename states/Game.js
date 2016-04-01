@@ -5,6 +5,8 @@ Lowrez.Game = function(game) {
 Lowrez.Game.prototype = {
 	create: function() {
 		this.game.stage.backgroundColor = '#ccc';
+		this.ball = new Ball(this.game, 32, 32, 0);
+		this.ball.anchor.set(0.5);
 	},
 
 	update: function() {
