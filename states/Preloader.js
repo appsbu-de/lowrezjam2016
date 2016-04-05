@@ -1,12 +1,20 @@
 Lowrez.Preloader = function(game) {
     this.ready = false;
+    game.CONST = {
+        BALL_BOUNCE: 0.95,
+        BALL_MAX_VEL_Y: 120,
+        BACKGROUND_SPEED: 0.5
+    }
 };
 
 Lowrez.Preloader.prototype = {
 
     preload: function() {
         this.load.image('font', 'images/font.png');
-        this.load.image('ball', 'images/ball.png');
+        this.load.image('ground', 'images/ground.png');
+        this.load.image('goal', 'images/goal.png');
+        this.load.image('opponent', 'images/opponent.png');
+        this.load.image('ball', 'images/ball_new.png');
     },
 
     create: function() {
