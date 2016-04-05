@@ -1,9 +1,13 @@
 Lowrez.Preloader = function(game) {
     this.ready = false;
     game.CONST = {
-        BALL_BOUNCE: 0.95,
-        BALL_MAX_VEL_Y: 120,
-        BACKGROUND_SPEED: 0.5
+        BALL_BOUNCE: 0.85,
+        BALL_MAX_VEL_Y: 160,
+        BACKGROUND_SPEED: 0.5,
+        BOTTOM: 58,
+        BALL_X: 8,
+        BALL_Y: 16,
+        GOAL_START_X: 64
     }
 };
 
