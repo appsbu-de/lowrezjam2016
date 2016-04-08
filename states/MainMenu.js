@@ -42,7 +42,7 @@ Lowrez.MainMenu.prototype = {
 		this.logo = this.add.sprite(0, 0, 'logo');
 
 		var tween = this.add.tween(this.logo)
-							.to({x: '-' + this.logo.width/2}, 2000, Phaser.Easing.Quadratic.InOut, true, 0, -1);
+							.to({x: '-' + this.logo.width/2}, 4000, Phaser.Easing.Quadratic.InOut, true, 0, -1);
 
 		tween.yoyo(true, 0);
 
@@ -75,7 +75,7 @@ Lowrez.MainMenu.prototype = {
 		if (cloud) {
 			cloud.reset(64, this.rnd.integerInRange(15, 45));
 			cloud.anchor.set(0, 1);
-			cloud.body.velocity.x = -10 - this.rnd.integerInRange(0, 30);
+			cloud.body.velocity.x = -10 - this.rnd.integerInRange(0, 15);
 			cloud.body.immovable = true;
 			cloud.body.allowGravity = false;
 			cloud.checkWorldBounds = true;
