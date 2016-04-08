@@ -7,7 +7,11 @@ Lowrez.Preloader = function(game) {
         BOTTOM: 58,
         BALL_X: 8,
         BALL_Y: 16,
-        GOAL_START_X: 64
+        GOAL_START_X: 64,
+        OPPONENT_START_X: 63,
+        OPPONENTS_JUMP_AT: 1,
+        OPPONENTS_MOVE_AT: 10,
+        OPPONENTS_MOVE_DELTA: 15
     }
 };
 
@@ -19,6 +23,7 @@ Lowrez.Preloader.prototype = {
         this.load.image('goal', 'images/goal.png');
         this.load.image('opponent', 'images/opponent.png');
         this.load.image('ball', 'images/ball_new.png');
+        this.load.image('cloud', 'images/cloud.png');
     },
 
     create: function() {
