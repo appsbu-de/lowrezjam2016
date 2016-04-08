@@ -12,14 +12,21 @@ Lowrez.MainMenu.prototype = {
 		this.clouds = this.add.physicsGroup();
 		this.clouds.createMultiple(4, 'cloud', 0, false);
 
+		this.highscoreText = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
+		this.highscoreText.text = "00";
+
 		this.menuTextStart = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextStart.text = "A - START";
 
 		this.menuTextHelp = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
-		this.menuTextHelp.text = "H - HELP";
+		this.menuTextHelp.text = "B - HELP";
 
 		this.menuTextAbout = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextAbout.text = "X - ABOUT";
+
+		this.highscore = this.add.image(this.world.centerX, this.world.centerY, this.highscoreText);
+		this.highscore.anchor.set(0.5);
+		this.highscore.tint = 0xeeeeee;
 
 		this.startText = this.add.image(6, this.game.CONST.MENU_TEXT_START_Y, this.menuTextStart);
 		this.startText.anchor.set(0, 0.5);
@@ -38,6 +45,11 @@ Lowrez.MainMenu.prototype = {
 							.to({x: '-' + this.logo.width/2}, 2000, Phaser.Easing.Quadratic.InOut, true, 0, -1);
 
 		tween.yoyo(true, 0);
+
+		var tween2 = this.add.tween(this.highscore.scale)
+							.to({x: 4, y: 4}, 2000, Phaser.Easing.Bounce.Out, true, 0, -1);
+
+		tween2.yoyo(true, 0);
 
 		this.startKey = this.input.keyboard.addKey(Phaser.Keyboard.A);
 		this.helpKey = this.input.keyboard.addKey(Phaser.Keyboard.H);
