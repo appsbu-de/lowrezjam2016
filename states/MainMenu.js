@@ -13,7 +13,7 @@ Lowrez.MainMenu.prototype = {
 		this.clouds.createMultiple(4, 'cloud', 0, false);
 
 		this.highscoreText = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
-		this.highscoreText.text = "00";
+		this.highscoreText.text = "";
 
 		this.menuTextStart = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextStart.text = "A - START";
@@ -52,20 +52,25 @@ Lowrez.MainMenu.prototype = {
 		tween2.yoyo(true, 0);
 
 		this.startKey = this.input.keyboard.addKey(Phaser.Keyboard.A);
-		this.helpKey = this.input.keyboard.addKey(Phaser.Keyboard.H);
+		this.helpKey = this.input.keyboard.addKey(Phaser.Keyboard.B);
 		this.aboutKey = this.input.keyboard.addKey(Phaser.Keyboard.X);
 		this.spawnCloud();
 	},
 
-	play: function() {
-		this.state.start('Game');
+	goto: function(state) {
+		this.state.start(state);
 	},
 
 	update: function() {
 		if (this.startKey.isDown) {
-			this.play();
+			this.goto('Game');
 		}
-
+		else if (this.helpKey.isDown) {
+			this.goto('Help')
+		}
+		else if (this.aboutKey.isDown) {
+			this.goto('About');
+		}
 		this.background.tilePosition.x -= this.game.CONST.BACKGROUND_SPEED;
 	},
 
