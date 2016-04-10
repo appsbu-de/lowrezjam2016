@@ -24,9 +24,9 @@ Lowrez.MainMenu.prototype = {
 		this.menuTextAbout = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextAbout.text = "X - ABOUT";
 
-		this.highscore = this.add.image(this.world.centerX + 3, this.world.centerY, this.highscoreText);
+		this.highscore = this.add.image(this.world.centerX + 4, this.world.centerY, this.highscoreText);
 		this.highscore.anchor.set(0.5);
-		this.highscore.tint = 0xeeeeee;
+		this.highscore.tint = 0xff3333;
 
 		this.startText = this.add.image(6, this.game.CONST.MENU_TEXT_START_Y, this.menuTextStart);
 		this.startText.anchor.set(0, 0.5);
