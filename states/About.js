@@ -9,13 +9,13 @@ Lowrez.About.prototype = {
 
 		this.backKey = this.input.keyboard.addKey(Phaser.Keyboard.A);
 
-		this.about = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
-		this.about.multiLine = true;
-		this.about.text = "Made by\n" +
-						 "Carsten\n" +
-						 "Sandtner\n\n" +
-						 "@casarock\n\n" +
-						 "Back: A";
+		var about = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
+		about.multiLine = true;
+		about.text = "Made by\n" +
+					 "Carsten\n" +
+					 "Sandtner\n\n" +
+					 "@casarock\n\n" +
+					 "Back: A";
 
 		this.logo = this.add.sprite(0, 64, 'logo');
 
@@ -23,7 +23,7 @@ Lowrez.About.prototype = {
 							.to({x: '-' + this.logo.width/2}, 4000, Phaser.Easing.Quadratic.InOut, true, 0, -1);
 
 		tween.yoyo(true, 0);
-		this.aboutTextImage = this.add.image(4, 66 + this.logo.height, this.about);
+		this.aboutTextImage = this.add.image(4, 66 + this.logo.height, about);
 
 	},
 
