@@ -13,7 +13,7 @@ Lowrez.MainMenu.prototype = {
 		this.clouds.createMultiple(4, 'cloud', 0, false);
 
 		this.highscoreText = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
-		this.highscoreText.text = "";
+		this.highscoreText.text = this.game.HIGHSCORE > 0 ? this.game.HIGHSCORE + "" : "";
 
 		this.menuTextStart = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextStart.text = "A - START";
@@ -24,7 +24,7 @@ Lowrez.MainMenu.prototype = {
 		this.menuTextAbout = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextAbout.text = "X - ABOUT";
 
-		this.highscore = this.add.image(this.world.centerX, this.world.centerY, this.highscoreText);
+		this.highscore = this.add.image(this.world.centerX + 3, this.world.centerY, this.highscoreText);
 		this.highscore.anchor.set(0.5);
 		this.highscore.tint = 0xeeeeee;
 

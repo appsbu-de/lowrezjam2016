@@ -9,11 +9,18 @@ Lowrez.Preloader = function(game) {
         BALL_Y: 16,
         GOAL_START_X: 64,
         OPPONENT_START_X: 63,
-        OPPONENTS_JUMP_AT: 1,
-        OPPONENTS_MOVE_AT: 10,
+        OPPONENTS_JUMP_AT: 10,
+        OPPONENTS_JUMP_PERCENTAGE: 60,
+        OPPONENTS_MOVE_AT: 5,
+        OPPONENTS_MOVE_ELASTICE_AT: 15,
+        OPPONENTS_MOVE_ELASTIC_PERCENTAGE: 40,
+        OPPONENTS_MOVE_PERCENTAGE: 30,
         OPPONENTS_MOVE_DELTA: 15,
+        OPPONENTS_MOVE_DELTA_MAX: 30,
         MENU_TEXT_START_Y: 30
-    }
+    };
+
+    game.HIGHSCORE = this.loadScore();
 };
 
 Lowrez.Preloader.prototype = {
@@ -55,6 +62,12 @@ Lowrez.Preloader.prototype = {
 
     startGame: function() {
         this.state.start('MainMenu');
+    },
+
+    loadScore: function() {
+        var highScore = localStorage.getItem('highscore') || 0;
+
+        return highScore;
     },
 
     render: function() {

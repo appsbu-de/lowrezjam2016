@@ -39,7 +39,7 @@ Lowrez.Game.prototype = {
 		this.scoreText.anchor.set(0);
 		this.scoreText.tint = 0x000000;
 		this.lastCollisonWithGoal = 0;
-		this.spawnedOppents = 0;
+		this.spawnedOpponents = 0;
 
 		this.spawnGoal();
 		this.spawnOpponent();
@@ -67,7 +67,13 @@ Lowrez.Game.prototype = {
 		this.quitGame();
 	},
 
-	quitGame: function(pointer) {
+	quitGame: function() {
+		
+		if (this.scoreValue > this.game.HIGHSCORE) {
+			this.game.HIGHSCORE = this.scoreValue;
+			localStorage.setItem('highscore', this.scoreValue);
+		}
+
 		this.state.start('MainMenu');
 	},
 
@@ -103,6 +109,7 @@ Lowrez.Game.prototype = {
 		var opponent = this.opponents.getFirstDead();
 
 		if (opponent) {
+			var diceRoll = this.rnd.integerInRange(1,100);
 			opponent.reset(this.game.CONST.OPPONENT_START_X, this.game.CONST.BOTTOM);
 			opponent.anchor.set(0, 1);
 			opponent.body.velocity.x = -30 - this.rnd.integerInRange(0, 20);
@@ -111,15 +118,18 @@ Lowrez.Game.prototype = {
 			opponent.checkWorldBounds = true;
 			opponent.outOfBoundsKill = true;
 
-			if (this.spawnedOppents > this.game.CONST.OPPONENTS_JUMP_AT) {
+			if (diceRoll < this.game.CONST.OPPONENTS_JUMP_PERCENTAGE
+				&& this.spawnedOpponents > this.game.CONST.OPPONENTS_JUMP_AT) {
+
 				opponent = this.jumpOpponent(opponent);
 			}
 
-			if (this.spawnedOppents > this.game.CONST.OPPONENTS_MOVE_AT) {
+			if (diceRoll < this.game.CONST.OPPONENTS_JUMP_PERCENTAGE
+				&& this.spawnedOpponents > this.game.CONST.OPPONENTS_MOVE_AT) {
 				opponent = this.moveOpponent(opponent);
 			}
 
-			this.spawnedOppents++;
+			this.spawnedOpponents++;
 		}
 
 		this.time.events.add(Phaser.Timer.SECOND * this.rnd.integerInRange(1, 4), this.spawnOpponent, this);
@@ -127,7 +137,7 @@ Lowrez.Game.prototype = {
 
 	jumpOpponent: function(opponent) {
 		opponent.body.bounce.y = 1.0;
-		opponent.body.velocity.y = -75;
+		opponent.body.velocity.y = -(this.rnd.integerInRange(60, 85));
 		opponent.body.allowGravity = true;
 		opponent.body.immovable = false;
 
@@ -136,10 +146,23 @@ Lowrez.Game.prototype = {
 
 	moveOpponent: function(opponent) {
 		var currentVelocityX = opponent.body.velocity.x;
+		var easing = Phaser.Easing.Linear.None;
+		var diceRoll = this.rnd.integerInRange(1,100);
+		var moveDelta = this.game.CONST.OPPONENTS_MOVE_DELTA;
+
 		opponent.body.velocity.x = currentVelocityX + this.game.CONST.OPPONENTS_MOVE_DELTA;
 
+		if (diceRoll > this.game.CONST.OPPONENTS_MOVE_ELASTIC_PERCENTAGE
+			&& this.spawnedOpponents > this.game.CONST.OPPONENTS_MOVE_ELASTICE_AT) {
+			easing = Phaser.Easing.Cubic.Out;
+		}
+
+		if (this.rnd.integerInRange(1, 100) > 35) {
+			moveDelta = this.rnd.integerInRange(this.game.CONST.OPPONENTS_MOVE_DELTA, this.game.CONST.OPPONENTS_MOVE_DELTA_MAX);
+		}
+
 		var tween = this.add.tween(opponent.body.velocity)
-							.to({x:currentVelocityX - this.game.CONST.OPPONENTS_MOVE_DELTA}, 500, "Linear", true, 0, -1);
+							.to({x:currentVelocityX - moveDelta}, 500, easing, true, 0, -1);
 
 		tween.yoyo(true, 250);
 
