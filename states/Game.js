@@ -6,6 +6,7 @@ Lowrez.Game.prototype = {
 	create: function() {
 		var fontSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!-_~#\"'&()[]|`\\/@°+=*$£€<>%áéíóú";
 		this.scoreValue = 0;
+		this.countdown = 3;
 		this.bounceSound = this.add.audio('bounce');
 		this.goalSound = this.add.audio('goal');
 		this.countdownSound = this.add.audio('countdown1');
@@ -34,6 +35,11 @@ Lowrez.Game.prototype = {
 		this.score = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.score.text = this.scoreValue + "";
 
+		this.countdownText = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
+		this.countdownText.text = this.countdown + "";
+		this.countdownImage = this.add.image(this.world.centerX, this.world.centerX, this.countdownText);
+		this.countdownImage.anchor.set(0.5);
+
 		this.goalIndicator = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.goalIndicator.text = "GOAAAL!";
 		this.goalText = this.add.image(this.world.centerX, this.world.centerX, this.goalIndicator);
@@ -46,22 +52,40 @@ Lowrez.Game.prototype = {
 		this.lastCollisonWithGoal = 0;
 		this.spawnedOpponents = 0;
 
-		this.spawnGoal();
-		this.spawnOpponent();
-		this.spawnCloud();
-
+		this.time.events.add(Phaser.Timer.SECOND, this.countdownHandler, this);
 	},
 
 	update: function() {
 		this.physics.arcade.collide(this.background, this.ball, this.ballGroundCollisionHandler, null, this);
-		this.physics.arcade.collide(this.background, this.opponents);
-		this.physics.arcade.overlap(this.ball, this.goals, this.goalCollisionHandler, null, this);
-		this.physics.arcade.overlap(this.ball, this.opponents, this.opponentCollisionHandler, null, this);
-		this.background.tilePosition.x -= this.game.CONST.BACKGROUND_SPEED;
+
+		if (this.countdown <= 0) {
+			this.physics.arcade.collide(this.background, this.opponents);
+			this.physics.arcade.overlap(this.ball, this.goals, this.goalCollisionHandler, null, this);
+			this.physics.arcade.overlap(this.ball, this.opponents, this.opponentCollisionHandler, null, this);
+			this.background.tilePosition.x -= this.game.CONST.BACKGROUND_SPEED;
+		}
+	},
+
+	countdownHandler: function() {
+		this.countdown--;
+
+		if (this.countdown <= 0) {
+			this.countdownImage.visible =  false;
+			this.countdownEndSound.play();
+			this.spawnGoal();
+			this.spawnOpponent();
+			this.spawnCloud();
+		}
+		else {
+			this.countdownImage.visible = true;
+			this.countdownText.text = this.countdown + "";
+			this.countdownSound.play();
+			this.time.events.add(Phaser.Timer.SECOND, this.countdownHandler, this);
+		}
 	},
 
 	ballGroundCollisionHandler: function() {
-		if (!this.ball.isGrounded) {
+		if (!this.ball.isGrounded && this.countdown <= 0) {
 			this.bounceSound.play();
 		}
 	},

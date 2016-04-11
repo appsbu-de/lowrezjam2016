@@ -6,7 +6,7 @@ Lowrez.Preloader = function(game) {
         BACKGROUND_SPEED: 0.5,
         BOTTOM: 58,
         BALL_X: 8,
-        BALL_Y: 16,
+        BALL_Y: 10,
         BALL_GROUNDED_Y: 54,
         GOAL_START_X: 64,
         OPPONENT_START_X: 63,
