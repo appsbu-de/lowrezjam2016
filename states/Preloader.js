@@ -7,6 +7,7 @@ Lowrez.Preloader = function(game) {
         BOTTOM: 58,
         BALL_X: 8,
         BALL_Y: 16,
+        BALL_GROUNDED_Y: 54,
         GOAL_START_X: 64,
         OPPONENT_START_X: 63,
         OPPONENTS_JUMP_AT: 10,
@@ -33,6 +34,12 @@ Lowrez.Preloader.prototype = {
         this.load.image('ball', 'images/ball_new.png');
         this.load.image('cloud', 'images/cloud.png');
         this.load.image('logo', 'images/logo.png');
+
+        this.load.audio('countdown1', 'sounds/Countdown.wav');
+        this.load.audio('countdown2', 'sounds/Countdown_end.wav');
+        this.load.audio('goal', 'sounds/Goal.wav');
+        this.load.audio('dead', 'sounds/Dead.wav');
+        this.load.audio('bounce', 'sounds/BounceBall.wav');
     },
 
     create: function() {

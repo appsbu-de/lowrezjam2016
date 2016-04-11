@@ -6,6 +6,11 @@ Lowrez.Game.prototype = {
 	create: function() {
 		var fontSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!-_~#\"'&()[]|`\\/@°+=*$£€<>%áéíóú";
 		this.scoreValue = 0;
+		this.bounceSound = this.add.audio('bounce');
+		this.goalSound = this.add.audio('goal');
+		this.countdownSound = this.add.audio('countdown1');
+		this.countdownEndSound = this.add.audio('countdown2');
+		this.deadSound = this.add.audio('dead');
 
 		this.game.stage.backgroundColor = '#b4bdef';
 
@@ -48,11 +53,17 @@ Lowrez.Game.prototype = {
 	},
 
 	update: function() {
-		this.physics.arcade.collide(this.background, this.ball);
+		this.physics.arcade.collide(this.background, this.ball, this.ballGroundCollisionHandler, null, this);
 		this.physics.arcade.collide(this.background, this.opponents);
 		this.physics.arcade.overlap(this.ball, this.goals, this.goalCollisionHandler, null, this);
 		this.physics.arcade.overlap(this.ball, this.opponents, this.opponentCollisionHandler, null, this);
 		this.background.tilePosition.x -= this.game.CONST.BACKGROUND_SPEED;
+	},
+
+	ballGroundCollisionHandler: function() {
+		if (!this.ball.isGrounded) {
+			this.bounceSound.play();
+		}
 	},
 
 	goalCollisionHandler: function(ball, goal) {
@@ -60,15 +71,17 @@ Lowrez.Game.prototype = {
 			this.updateScoreText();
 			this.showGoalAnimation(goal);
 			this.lastCollisonWithGoal = this.time.now + 500;
+			this.goalSound.play();
 		}
 	},
 
 	opponentCollisionHandler: function() {
+		this.deadSound.play();
 		this.quitGame();
 	},
 
 	quitGame: function() {
-		
+
 		if (this.scoreValue > this.game.HIGHSCORE) {
 			this.game.HIGHSCORE = this.scoreValue;
 			localStorage.setItem('highscore', this.scoreValue);
