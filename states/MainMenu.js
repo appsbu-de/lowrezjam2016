@@ -13,7 +13,7 @@ Lowrez.MainMenu.prototype = {
 		this.clouds.createMultiple(4, 'cloud', 0, false);
 
 		this.highscoreText = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
-		this.highscoreText.text = "";
+		this.highscoreText.text = this.game.HIGHSCORE > 0 ? this.game.HIGHSCORE + "" : "";
 
 		this.menuTextStart = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextStart.text = "A - START";
@@ -24,9 +24,9 @@ Lowrez.MainMenu.prototype = {
 		this.menuTextAbout = this.add.retroFont('font', 6, 11, fontSet, 8, 3, 0);
 		this.menuTextAbout.text = "X - ABOUT";
 
-		this.highscore = this.add.image(this.world.centerX, this.world.centerY, this.highscoreText);
+		this.highscore = this.add.image(this.world.centerX + 4, this.world.centerY, this.highscoreText);
 		this.highscore.anchor.set(0.5);
-		this.highscore.tint = 0xeeeeee;
+		this.highscore.tint = 0xff3333;
 
 		this.startText = this.add.image(6, this.game.CONST.MENU_TEXT_START_Y, this.menuTextStart);
 		this.startText.anchor.set(0, 0.5);
@@ -55,6 +55,10 @@ Lowrez.MainMenu.prototype = {
 		this.helpKey = this.input.keyboard.addKey(Phaser.Keyboard.B);
 		this.aboutKey = this.input.keyboard.addKey(Phaser.Keyboard.X);
 		this.spawnCloud();
+
+		if (!this.game.CONST.MUSIC.isPlaying){
+			this.game.CONST.MUSIC.play('',0,1,true);
+		}
 	},
 
 	goto: function(state) {

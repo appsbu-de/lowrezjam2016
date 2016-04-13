@@ -7,6 +7,7 @@ Ball = function(game, x, y, rotateSpeed) {
     this.body.collideWorldBounds = true;
     this.velocitySet = true;
     this.game.add.existing(this);
+    this.isGrounded = false;
 };
 
 Ball.prototype = Object.create(Phaser.Sprite.prototype);
@@ -20,7 +21,10 @@ Ball.prototype.update = function() {
         this.body.velocity.y = this.game.CONST.BALL_MAX_VEL_Y;
     }
 
+
     this.body.velocity.y = this.body.velocity.y > this.game.CONST.BALL_MAX_VEL_Y
                             ? this.game.CONST.BALL_MAX_VEL_Y
                             : this.body.velocity.y;
+
+    this.isGrounded = (this.body.position.y === this.game.CONST.BALL_GROUNDED_Y ? true : false);
 };
