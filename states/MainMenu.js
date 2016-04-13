@@ -55,6 +55,10 @@ Lowrez.MainMenu.prototype = {
 		this.helpKey = this.input.keyboard.addKey(Phaser.Keyboard.B);
 		this.aboutKey = this.input.keyboard.addKey(Phaser.Keyboard.X);
 		this.spawnCloud();
+
+		if (!this.game.CONST.MUSIC.isPlaying){
+			this.game.CONST.MUSIC.play('',0,1,true);
+		}
 	},
 
 	goto: function(state) {

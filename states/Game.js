@@ -51,7 +51,8 @@ Lowrez.Game.prototype = {
 		this.scoreText.tint = 0x000000;
 		this.lastCollisonWithGoal = 0;
 		this.spawnedOpponents = 0;
-
+		this.game.CONST.MUSIC.stop();
+		
 		this.time.events.add(Phaser.Timer.SECOND, this.countdownHandler, this);
 	},
 

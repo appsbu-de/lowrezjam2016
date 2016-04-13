@@ -27,6 +27,7 @@ Lowrez.Preloader = function(game) {
 Lowrez.Preloader.prototype = {
 
     preload: function() {
+
         this.load.image('font', 'images/font.png');
         this.load.image('ground', 'images/ground.png');
         this.load.image('goal', 'images/goal.png');
@@ -40,6 +41,8 @@ Lowrez.Preloader.prototype = {
         this.load.audio('goal', 'sounds/Goal.wav');
         this.load.audio('dead', 'sounds/Dead.wav');
         this.load.audio('bounce', 'sounds/BounceBall.wav');
+
+        this.load.audio('titlemusic', ['sounds/sailor_waltz.mp3', 'sounds/sailor_waltz.ogg']);
     },
 
     create: function() {
@@ -48,23 +51,11 @@ Lowrez.Preloader.prototype = {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.physics.arcade.gravity.y = 250;
 
-        var logo = this.add.sprite(this.world.width/2, this.world.height/2, 'appsbude');
-        logo.anchor.set(0.5, 0.5);
-        logo.scale.set(0.25, 0.25);
-
-        /*this.game.time.events.add(Phaser.Timer.SECOND * 2.0, function() {
-
-            var tween = this.add.tween(logo)
-                .to({alpha: 0}, 750, Phaser.Easing.Linear.none);
-
-            tween.onComplete.add(function() {
-                logo.destroy();
-                this.startGame();
-            }, this);
-
-            tween.start();
-        }, this);*/
-        this.startGame();
+        //if (this.cache.isSoundDecoded('titlemusic') && this.ready === false) {
+            this.ready = true;
+            this.game.CONST.MUSIC = this.add.audio('titlemusic', 1, true);
+            this.startGame();
+        //}
     },
 
     startGame: function() {
